@@ -14,7 +14,7 @@ function SimpleFireMode:Start()
     self.dataContainer = self.gameObject.GetComponent(DataContainer)
 
     self.modeIndex = self.dataContainer.GetBool("startSemi") and 1 or 0
-    self.switchCooldownDuration = self.dataContainer.GetFloat("switchCooldown")
+    self.switchCooldown = self.dataContainer.GetFloat("switchCooldown")
     self.switchKeybind = self.dataContainer.GetString("switchKeybind")
 
     self.selectorValues = {}
@@ -41,7 +41,8 @@ end
 
 function SimpleFireMode:SwitchMode()
     self.modeIndex = 1 - self.modeIndex
-    self.switchTimer = self.switchCooldownDuration
+    self.switchTimer = self.switchCooldown
+    self.weapon.LockWeapon()
     
     if self.animator ~= nil then
         self.animator.SetTrigger(self.switchParameter)
@@ -60,14 +61,17 @@ function SimpleFireMode:Update()
 
     if self.switchTimer > 0 then
         self.switchTimer = self.switchTimer - Time.deltaTime
+
+        if self.switchTimer <= 0 then
+            self.weapon.UnlockWeapon()
+        end
     end
 
-    local isEquippedByPlayer = (self.weapon.user ~= nil and self.weapon.user.isPlayer and self.weapon.isUnholstered)
-
-    if isEquippedByPlayer
-        and Input.GetKeyDown(self.switchKeybind)
-        and self.switchTimer <= 0
+    if self.switchTimer <= 0
         and not self.weapon.isReloading
+        and self.weapon.user ~= nil
+        and self.weapon.user.isPlayer
+        and Input.GetKeyDown(self.switchKeybind)
     then
         self:SwitchMode()
     end
