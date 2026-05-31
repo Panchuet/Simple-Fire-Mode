@@ -1,7 +1,7 @@
-# Simple Fire Mode
+# SimpleFireMode.lua
 This script lets players toggle a weapon between Full-Auto and Semi-Auto firing modes.
 
-**Step 1: Component Setup**
+## Step 1: Component Setup
 1. Select the main (root) game object of your weapon in Unity
 2. Add a `Scripted Behaviour` component to it
 3. Add a `Data Container` component to the same object
@@ -9,7 +9,7 @@ This script lets players toggle a weapon between Full-Auto and Semi-Auto firing 
 5. Enable `Keep Scripts On Third Person` in the `Weapon` script
 6. Use the latest `Weapon` script from https://discord.com/channels/1439609938518347869/1479396551922159678. Choose `One Shot` in `Audio Mode`
 
-**Step 2: Data Container Setup**
+## Step 2: Data Container Setup
 Open your Data Container and add these 6 keys exactly as written.
 - `startSemi` — **Bool**
   - True (Checked): Weapon starts in Semi-Auto. False (Unchecked): Weapon starts in Full-Auto
@@ -24,7 +24,7 @@ Open your Data Container and add these 6 keys exactly as written.
 - `selectorValues` — **String**
   - Two numbers separated by a single space (like `0 1`). The first number is for Auto (Mode 0), and the second number is for Semi (Mode 1)
 
-**Step 3: Animator Setup**
+## Step 3: Animator Setup
 Open your Animator's Parameters tab and add two new entries:
 1. A `Trigger` parameter. Name it exactly what you typed in `switchParameterName`
 2. An `Int` (Integer) parameter. Name it exactly what you typed in `selectorParameterName`
